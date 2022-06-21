@@ -44,7 +44,7 @@ def about():
     return render_template("about.html", title="About")
 
 
-@app.route('/register')
+@app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
     return render_template('register.html', title='Register', form=form)
@@ -52,7 +52,7 @@ def register():
 
 @app.route('/login')
 def login():
-    form = LoginForm()tgsfglw
+    form = LoginForm()
     return render_template('login.html', title='Login', form=form)
 
 # This is only true if we run this script directly, if we run this with Python itself
