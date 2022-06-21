@@ -13,6 +13,7 @@ app.config['SECRET_KEY'] = 'aa5357f134362045710b1f5bad84a4c5'
 # then we enter the command `flask run`
 # have to exit out and do this again UNTIL
 # Enter the command `export FLASK_DEBUG=1` and this makes it so we don't have to restart the server every time
+# entering control+C will stop the development server from running
 
 
 posts = [
