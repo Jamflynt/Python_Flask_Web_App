@@ -1,4 +1,4 @@
-from flask import Flask, escape, request, render_template, url_for
+from flask import Flask, escape, request, render_template, url_for, flash, redirect
 from forms import RegistrationForm, LoginForm
 
 # Want to use url_for for links within project
@@ -47,6 +47,11 @@ def about():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
+    if form.validate_on_submit():
+        # Second argument in the flash method is the style (in this case Bootstrap)
+        flash(f'Account created for {form.username.data}!', 'success')
+        # note the url_for method is taking the name of the function in the redirect
+        return redirect(url_for('hello'))
     return render_template('register.html', title='Register', form=form)
 
 
