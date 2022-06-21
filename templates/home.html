@@ -1,0 +1,22 @@
+<!--Shortcut key here for boilerplate is still "!" and then tab-->
+<!--Templating engine that Flask uses is called "Jinja 2": https://ginga.readthedocs.io/en/v2.7.1/manual/developers.html-->
+
+{% extends "layout.html" %}
+{% block content %}
+<!--Code block is represented curly braces and percentage sign as in Flask HTML-->
+{% for post in posts%}
+<!--Now we use the double curly braces within the code block to access the information-->
+<article class="media content-section">
+    <div class="media-body">
+        <div class="article-metadata">
+            <a class="mr-2" href="#">{{ post.author }}</a>
+            <small class="text-muted">{{ post.date_posted }}</small>
+        </div>
+        <h2><a class="article-title" href="#">{{ post.title }}</a></h2>
+        <p class="article-content">{{ post.content }}</p>
+    </div>
+
+</article>
+{%endfor%}
+<!--Note: this is needed to represent when the code block is ended-->
+{% endblock content %}
