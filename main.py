@@ -1,12 +1,18 @@
 from flask import Flask, escape, request, render_template, url_for, flash, redirect
 from forms import RegistrationForm, LoginForm
+from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 
 # Want to use url_for for links within project
 
 # "name" is same as "self"?
 app = Flask(__name__)
-
 app.config['SECRET_KEY'] = 'aa5357f134362045710b1f5bad84a4c5'
+# Setting the location of the database we need to use a configuration
+# the '///' is the relative path from the file
+app.config['SQLAlchemy_DATABASE_URI'] = 'sqlite:///site.db'
+db = SQLAlchemy(app)
+# Database structure are classes and are referred to as models
 
 # Have to set an environment variable to the file that we want to be the flask application for this
 # We did `export FLASK_APP=main.py` --> new command line (green arrow)
@@ -14,6 +20,31 @@ app.config['SECRET_KEY'] = 'aa5357f134362045710b1f5bad84a4c5'
 # have to exit out and do this again UNTIL
 # Enter the command `export FLASK_DEBUG=1` and this makes it so we don't have to restart the server every time
 # entering control+C will stop the development server from running
+
+class User(db.Model):
+    id = db.Column(db.Interger, primary_key=True)
+    username = db.Column(db.String(20), unique=True, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    image_file = db.Column(db.String(20), nullable=False, default='default.jpeg')
+    password = db.Column(db.String(60), nullable=False)
+    posts = db.relationship
+
+    # How our object is printed when it is printed out
+    # Referred to as Dunder Methods (double underscore method)
+    def __repr__(self):
+        return f"User('{self.username}', '{self.image}', '{self.image_file}')"
+
+class Post(db.Model):
+    id = db.Column(db.Interger, primary_key=True)
+    title=db.Column(db.String(100), nullable=False)
+    # utc times --> pass in the function without the () so it does not pass in the actual current time
+    # but rather passes in the function
+    # Always want to use UTC times when passing times into a database so they are consistent
+    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    content = db.Column(db.Text, nullable=False)
+
+    def __repr__(self):
+        return f"User('{self.username}', '{self.date_posted}')"
 
 
 posts = [
@@ -74,3 +105,5 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
+# ORM (Object Relational Mapper) --> organizes database in an easy to use OOP way
+# SQL Lite Database
