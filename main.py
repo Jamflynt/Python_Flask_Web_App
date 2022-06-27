@@ -10,7 +10,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'aa5357f134362045710b1f5bad84a4c5'
 # Setting the location of the database we need to use a configuration
 # the '///' is the relative path from the file
-app.config['SQLAlchemy_DATABASE_URI'] = 'sqlite:///site.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://site.db'
 db = SQLAlchemy(app)
 # Database structure are classes and are referred to as models
 
@@ -37,7 +37,7 @@ class User(db.Model):
         return f"User('{self.username}', '{self.image}', '{self.image_file}')"
 
 class Post(db.Model):
-    id = db.Column(db.Interger, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     title=db.Column(db.String(100), nullable=False)
     # utc times --> pass in the function without the () so it does not pass in the actual current time
     # but rather passes in the function
@@ -45,7 +45,7 @@ class Post(db.Model):
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     content = db.Column(db.Text, nullable=False)
     # use the lowercase 'user' in this case cause we are referencing the post model
-    user_id = db.Column(db.Integer, db.ForiegnKey('user.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
         return f"User('{self.username}', '{self.date_posted}')"
