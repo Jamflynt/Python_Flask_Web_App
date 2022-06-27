@@ -22,12 +22,14 @@ db = SQLAlchemy(app)
 # entering control+C will stop the development server from running
 
 class User(db.Model):
-    id = db.Column(db.Interger, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     image_file = db.Column(db.String(20), nullable=False, default='default.jpeg')
     password = db.Column(db.String(60), nullable=False)
-    posts = db.relationship
+    # lazy argument as true will load the data as necessary in one go
+    # Helps us get all the stuff from a user without any extra code
+    posts = db.relationship('Post', backref='author', lazy=True)
 
     # How our object is printed when it is printed out
     # Referred to as Dunder Methods (double underscore method)
@@ -42,6 +44,8 @@ class Post(db.Model):
     # Always want to use UTC times when passing times into a database so they are consistent
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     content = db.Column(db.Text, nullable=False)
+    # use the lowercase 'user' in this case cause we are referencing the post model
+    user_id = db.Column(db.Integer, db.ForiegnKey('user.id'), nullable=False)
 
     def __repr__(self):
         return f"User('{self.username}', '{self.date_posted}')"
