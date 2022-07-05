@@ -10,7 +10,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'aa5357f134362045710b1f5bad84a4c5'
 # Setting the location of the database we need to use a configuration
 # the '///' is the relative path from the file
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://site.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 db = SQLAlchemy(app)
 # Database structure are classes and are referred to as models
 
@@ -20,6 +20,7 @@ db = SQLAlchemy(app)
 # have to exit out and do this again UNTIL
 # Enter the command `export FLASK_DEBUG=1` and this makes it so we don't have to restart the server every time
 # entering control+C will stop the development server from running
+
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -105,6 +106,8 @@ def login():
 
 # This is only true if we run this script directly, if we run this with Python itself
 # Run the command `Python main.py`
+
+
 if __name__ == '__main__':
     app.run(debug=True)
 
