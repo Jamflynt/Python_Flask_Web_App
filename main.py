@@ -37,9 +37,10 @@ class User(db.Model):
     def __repr__(self):
         return f"User('{self.username}', '{self.image}', '{self.image_file}')"
 
+
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title=db.Column(db.String(100), nullable=False)
+    title = db.Column(db.String(100), nullable=False)
     # utc times --> pass in the function without the () so it does not pass in the actual current time
     # but rather passes in the function
     # Always want to use UTC times when passing times into a database so they are consistent
