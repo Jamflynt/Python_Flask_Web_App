@@ -35,7 +35,7 @@ class User(db.Model):
     # How our object is printed when it is printed out
     # Referred to as Dunder Methods (double underscore method)
     def __repr__(self):
-        return f"User('{self.username}', '{self.image}', '{self.image_file}')"
+        return f"User('{self.username}', '{self.email}', '{self.image_file}')"
 
 
 class Post(db.Model):
